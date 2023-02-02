@@ -1,3 +1,4 @@
+import 'package:first/widgets/category_screen/category_fetcher.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -7,9 +8,8 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('heeee'),
-      ),
+      body: CategoryFetcher(),
     );
   }
 }
+

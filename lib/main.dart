@@ -1,9 +1,11 @@
 import 'package:first/screens/categoryscreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:first/models/database_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(create: (_) => DatabaseProvider(), child: const MyApp(),));
 }
 
 class MyApp extends StatelessWidget {

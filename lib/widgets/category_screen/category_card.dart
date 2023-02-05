@@ -1,4 +1,5 @@
 import 'package:first/models/ex_category.dart';
+import 'package:first/screens/expense_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -8,6 +9,9 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: (){
+        Navigator.of(context).pushNamed(ExpenseScreen.name, arguments: category.title);
+      },
       leading: Padding(padding: const EdgeInsets.all(8.0), child: Icon(category.icon),),
       title: Text(category.title),
       subtitle: Text('entries: ${category.entries}'),

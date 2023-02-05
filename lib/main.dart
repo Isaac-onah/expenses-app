@@ -1,4 +1,5 @@
 import 'package:first/screens/categoryscreen.dart';
+import 'package:first/screens/expense_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: CategoryScreen.name,
       routes: {
         CategoryScreen.name: (_) => const CategoryScreen(),
+        ExpenseScreen.name: (_) => const ExpenseScreen(),
       },
     );
   }

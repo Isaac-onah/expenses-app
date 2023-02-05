@@ -139,10 +139,29 @@ class DatabaseProvider with ChangeNotifier {
         //notify the listeners about the change in value of  '_expenses'
         notifyListeners();
         //after we inserts the expense, we need to update the 'entries' and 'total amount' of the related 'category'
-        var data = calculateEntriesAmount(exp.category);
-        updateCategory(exp.category, data['entries'], data['totalAmount']);
+        var ex = findCategory(exp.category);
+        updateCategory(exp.category, ex.entries + 1, ex.totalAmount + exp.amount);
       });
     });
+  }
+
+  //fetch expenses based on category
+  Future<void> fetchExpenses(String category) async{
+    final db = await database;
+    return await db.transaction((txn) async{
+      return await txn.query(eTable, where: 'category ==?',whereArgs: [category]).then((data){
+        final converted = List<Map<String, dynamic>>.from(data);
+        //
+        List<Expense> nList = List.generate(converted.length, (index) => Expense.fromString(converted[index]));
+        _expenses = nList;
+        return _expenses;
+      });
+    });
+  }
+
+
+  ExpenseCategory findCategory(String title){
+    return _categories.firstWhere((element) => element.title == title);
   }
 
   //calculate amount of entries

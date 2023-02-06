@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 // import 'package:intl/intl.dart';
@@ -66,7 +67,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
               children: [
                 Expanded(
                     child:
-                        Text(_date != null ? _date.toString() : 'Select Date')),
+                        Text(_date != null ? DateFormat('MMM dd, yyyy').format(_date!) : 'Select Date')),
                 // Text(_date != null
                 //     ? DateFormat('MMMM dd, yyyy').format(_date!)
                 //     : 'Select Date'),

@@ -1,6 +1,7 @@
 import 'package:first/models/database_provider.dart';
 import 'package:first/widgets/expense_screen/expense_list.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseFetcher extends StatefulWidget {
@@ -20,9 +21,10 @@ class _ExpenseFetcherState extends State<ExpenseFetcher> {
   }
 
   @override
-  void iniState(){
+  void initState(){
     super.initState();
     _expenseList = _getExpenseList();
+
   }
 
   @override

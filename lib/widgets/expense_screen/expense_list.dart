@@ -1,9 +1,10 @@
 import 'package:first/models/database_provider.dart';
+import 'package:first/widgets/expense_screen/expense_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseList extends StatelessWidget {
-  const ExpenseList({Key? key}) : super(key: key);
+  const ExpenseList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class ExpenseList extends StatelessWidget {
         var exList = db.expenses;
         return ListView.builder(
           itemCount: exList.length,
-            itemBuilder: (_, i) => ListTile(title: Text(exList[i].title),));
+            itemBuilder: (_, i) => ExpenseCard(exList[i]),);
       },
     );
   }

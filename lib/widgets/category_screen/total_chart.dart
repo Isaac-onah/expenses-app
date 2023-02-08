@@ -2,7 +2,6 @@ import 'package:first/models/database_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:provider/provider.dart';
-import 'package:first/models/database_provider.dart';
 
 class TotalChart extends StatefulWidget {
   const TotalChart({super.key});
@@ -14,23 +13,66 @@ class TotalChart extends StatefulWidget {
 class _TotalChartState extends State<TotalChart> {
   @override
   Widget build(BuildContext context) {
-    // return Consumer<DatabaseProvider>(
-    //     builder: (_, db, __) {
-    //       var list = db.categories;
-    //       return Row(
-    //         children: const[
-    //           Expanded(flex: 60, child: Text('Chart')),
-    //           Expanded(
-    //               flex: 40,
-    //               child: PieChart(
-    //                 PieChartData(
-    //                     sections: list.map((e) => null).toList();
-    //                 ),
-    //               ))
-    //         ],
-    //       );
-    //     }
-    // );
-    return const Text("data");
+    return Consumer<DatabaseProvider>(builder: (_, db, __) {
+      var list = db.categories;
+      var total = db.calculateTotalExpenses();
+      return Row(
+        children: [
+          Expanded(
+              flex: 60,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FittedBox(
+                      alignment: Alignment.center,
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'Total Expenses: $total',
+                        textScaleFactor: 1.5,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    ...list.map((e) => Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 8.0,
+                                height: 8.0,
+                                color: Colors.primaries[list.indexOf(e)],
+                              ),
+                              SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(e.title),
+                              SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(
+                                  '${((e.totalAmount / total) * 100).toStringAsFixed(2)}%'),
+                            ],
+                          ),
+                        ))
+                  ])),
+          Expanded(
+              flex: 40,
+              child: PieChart(
+                PieChartData(
+                  centerSpaceRadius: 20.0,
+                  sections: list
+                      .map((e) => PieChartSectionData(
+                          showTitle: false,
+                          value: e.totalAmount,
+                          color: Colors.primaries[list.indexOf(e)]))
+                      .toList(),
+                ),
+              ))
+        ],
+      );
+    });
   }
 }

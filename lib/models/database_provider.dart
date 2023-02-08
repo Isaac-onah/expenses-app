@@ -173,4 +173,28 @@ class DatabaseProvider with ChangeNotifier {
     }
     return {'entries': list.length, 'totalAmount':total};
   }
+
+  //calculate total expenses
+  double calculateTotalExpenses(){
+    return _categories.fold(0.0, (previousValue, element) => previousValue + element.totalAmount);
+  }
+
+  //calculateWeekExpenses
+  calculateWeekExpenses(){
+    //we know that we need 7 entries
+    for(int i = 0; i < 7; i++){
+      //1 total for each entry
+      double total = 0.0;
+      //subtract i from today to get previous dates.
+      final weekDay = DateTime.now().subtract(Duration(days: i));
+
+      //check how many transactions happened that day
+      for(int j = 0; j < _expenses.length; j++){
+        if(_expenses[j].date.year == weekDay.year && _expenses[j].date.month == weekDay.month && _expenses[j].date.day == weekDay.day){
+          //if found then add the amount to total
+          total += _expenses[j].amount;
+        }
+      }
+    }
+  }
 }

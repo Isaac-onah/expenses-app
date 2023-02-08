@@ -1,4 +1,5 @@
 import 'package:first/models/database_provider.dart';
+import 'package:first/widgets/expense_screen/expense_chart.dart';
 import 'package:first/widgets/expense_screen/expense_list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -34,7 +35,18 @@ class _ExpenseFetcherState extends State<ExpenseFetcher> {
         if(snapshot.hasError){
           return Center(child: Text(snapshot.error.toString()),);
         }else{
-          return const ExpenseList();
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children:[
+                SizedBox(
+                  height: 250,
+                  child: ExpenseChart(widget.category),
+                ),
+                Expanded(child:  ExpenseList()),
+              ],
+            ),
+          );
         }
       }else{
         return const Center(

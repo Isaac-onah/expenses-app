@@ -1,5 +1,6 @@
 import 'package:first/models/database_provider.dart';
 import 'package:first/widgets/category_screen/category_list.dart';
+import 'package:first/widgets/category_screen/total_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,15 @@ class _CategoryFetcherState extends State<CategoryFetcher> {
         if(snapshot.hasError){
             return Center(child: Text(snapshot.error.toString()),);
           }else{
-            return const CategoryList();
+            return Column(
+              children:const [
+                SizedBox(
+height: 250.0,
+                  child: TotalChart(),
+                ),
+                Expanded(child: CategoryList()),
+              ],
+            );
           }
       }else{
         return const Center(child: CircularProgressIndicator(),);

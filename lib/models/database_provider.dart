@@ -159,6 +159,19 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
+  //fetch all expenses
+  Future<List<Expense>> fetchAllExpenses() async{
+    final db = await database;
+    return await db.transaction((txn) async{
+      return await txn.query(eTable).then((data) {
+        final converted = List<Map<String, dynamic>>.from(data);
+        List<Expense> nList = List.generate(converted.length, (index) => Expense.fromString(converted[index]));
+        _expenses = nList;
+        return _expenses;
+      });
+    });
+  }
+
 
   ExpenseCategory findCategory(String title){
     return _categories.firstWhere((element) => element.title == title);
@@ -181,6 +194,7 @@ class DatabaseProvider with ChangeNotifier {
 
   //calculateWeekExpenses
   calculateWeekExpenses(){
+    List<Map<String, dynamic>> data = [];
     //we know that we need 7 entries
     for(int i = 0; i < 7; i++){
       //1 total for each entry
@@ -195,6 +209,11 @@ class DatabaseProvider with ChangeNotifier {
           total += _expenses[j].amount;
         }
       }
+//add to a list
+      data.add({'day': weekDay, 'amount':total});
     }
+
+    return data;
   }
+
 }

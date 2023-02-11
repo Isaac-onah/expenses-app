@@ -6,6 +6,15 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseProvider with ChangeNotifier {
+
+  String _searchText='';
+  String get searchText => _searchText;
+  set searchText(String value){
+    _searchText = value;
+    notifyListeners();
+    //when the value of the text changed it will notify the widgets
+  }
+
   //in-app memoery for holding the Expense categories temporarily
   List<ExpenseCategory> _categories = [];
 
@@ -14,7 +23,9 @@ class DatabaseProvider with ChangeNotifier {
   //in-app memoery for holding the Expense  temporarily
   List<Expense> _expenses = [];
 
-  List<Expense> get expenses => _expenses;
+  List<Expense> get expenses {
+   return _searchText !=''?_expenses.where((e) => e.title.toLowerCase().contains(_searchText.toLowerCase())).toList() : _expenses;
+  }
 
   Database? _database;
 
@@ -141,6 +152,23 @@ class DatabaseProvider with ChangeNotifier {
         //after we inserts the expense, we need to update the 'entries' and 'total amount' of the related 'category'
         var ex = findCategory(exp.category);
         updateCategory(exp.category, ex.entries + 1, ex.totalAmount + exp.amount);
+      });
+    });
+  }
+
+  //Method to delete an expense from database
+  Future<void> deleteExpense(int expId, String category, double amount) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      await txn.delete(eTable, where: 'id == ?', whereArgs: [expId])
+          .then((_) {
+            //remove from in-app memory too
+        _expenses.removeWhere((element) => element.id == expId);
+        notifyListeners();
+
+        //we have to update the entries and total amount too
+        var ex = findCategory(category);
+        updateCategory(category, ex.entries - 1, ex.totalAmount - amount);
       });
     });
   }

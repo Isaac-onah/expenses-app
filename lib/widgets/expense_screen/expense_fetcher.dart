@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class ExpenseFetcher extends StatefulWidget {
   final String category;
-  const ExpenseFetcher(this.category, {super.key});
+  const ExpenseFetcher(this.category,{super.key});
 
   @override
   State<ExpenseFetcher> createState() => _ExpenseFetcherState();
@@ -35,16 +35,18 @@ class _ExpenseFetcherState extends State<ExpenseFetcher> {
         if(snapshot.hasError){
           return Center(child: Text(snapshot.error.toString()),);
         }else{
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children:[
-                SizedBox(
-                  height: 250,
-                  child: ExpenseChart(widget.category),
-                ),
-                Expanded(child:  ExpenseList()),
-              ],
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children:[
+                  SizedBox(
+                    height: 250,
+                    child: ExpenseChart(widget.category),
+                  ),
+                  Expanded(child:  ExpenseList()),
+                ],
+              ),
             ),
           );
         }

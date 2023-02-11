@@ -1,5 +1,7 @@
+import 'package:first/screens/all_expenses.dart';
 import 'package:first/screens/categoryscreen.dart';
 import 'package:first/screens/expense_screen.dart';
+import 'package:first/widgets/all_expenses/all_expenses_fetcher.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
       routes: {
         CategoryScreen.name: (_) => const CategoryScreen(),
         ExpenseScreen.name: (_) => const ExpenseScreen(),
+        AllExpense.name: (_) => const AllExpense(),
+
       },
     );
   }

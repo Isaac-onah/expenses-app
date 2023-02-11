@@ -7,15 +7,15 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 
-class AlExpense extends StatefulWidget {
-  const AlExpense({Key? key}) : super(key: key);
+class AllExpense extends StatefulWidget {
+  const AllExpense({Key? key}) : super(key: key);
   static const name = '/all_expenses';
 
   @override
-  State<AlExpense> createState() => _AlExpenseState();
+  State<AllExpense> createState() => _AllExpenseState();
 }
 
-class _AlExpenseState extends State<AlExpense> {
+class _AllExpenseState extends State<AllExpense> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -16,7 +16,7 @@ class CategoryList extends StatelessWidget {
           parent: AlwaysScrollableScrollPhysics()
         ),
           itemCount: list.length,
-          itemBuilder: (_, i)=>CategoryCard(list[i]));
+          itemBuilder: (_, i)=>CategoryCard(list[i],Colors.primaries[i]));
     });
   }
 }
